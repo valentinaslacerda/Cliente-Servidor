@@ -12,10 +12,11 @@ public class ImplServidor implements Runnable {
   private Scanner s = null;
   private static PrintStream[] saidas = new PrintStream[4];
   public static int id = 0;
+  private Log log;
 
-  public ImplServidor(Socket cliente) {
+  public ImplServidor(Socket cliente, Log log) {
     socketCliente = cliente;
-
+    this.log = log;
     try {
       ImplServidor.saidas[cont] = new PrintStream(cliente.getOutputStream());
     } catch (IOException e) {
@@ -61,6 +62,14 @@ public class ImplServidor implements Runnable {
     }
   }
 
+  private synchronized void writeLog(String mensagem) {
+    try {
+      log.addMensagemToQueue(mensagem);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   private void encaminharUnicast(String mensagem) {
     String[] partes = mensagem.split(" ");
     String msg = partes[1];
@@ -69,9 +78,11 @@ public class ImplServidor implements Runnable {
 
     if (destino == origem) {
       System.out.println("você não pode enviar uma mensagem para si mesmo");
+      writeLog("Cliente " + origem + " tentou enviar uma mensagem unicast para si mesmo");
     } else {
       try {
         saidas[destino - 1].println(mensagem);
+        writeLog("Mensagem unicast enviada de " + origem + " para " + destino + ": " + msg);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -84,9 +95,10 @@ public class ImplServidor implements Runnable {
     String[] partes = mensagem.split(" ");
     String msg = partes[1];
     int origem = Integer.parseInt(partes[3]);
-    for (int i = 0; i < 3; i++) {
-      if (origem - 1 != i) {
-        saidas[i].println(mensagem);
+    for (int destino = 0; destino < 3; destino++) {
+      if (origem - 1 != destino) {
+        saidas[destino].println(mensagem);
+        writeLog("Mensagem broadcast enviada de " + origem + " para " + (destino + 1) + ": " + msg);
       }
 
     }

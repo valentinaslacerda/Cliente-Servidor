@@ -45,6 +45,7 @@ public class ImplCliente implements Runnable {
       }
       saida.close();
       teclado.close();
+      entradaDoServidor.close();
       cliente.close();
       System.out.println("Cliente finaliza conexão.");
     } catch (IOException e) {

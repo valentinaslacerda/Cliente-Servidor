@@ -1,4 +1,4 @@
-package Anel;
+package Estrela;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Log implements Runnable {
   private BufferedWriter logWriter;
   private BlockingQueue<String> mensagemQueue;
-  private final String arquivo = "log_anel.txt";
+  private final String arquivo = "log_estrela.txt";
 
   public Log() {
     try {

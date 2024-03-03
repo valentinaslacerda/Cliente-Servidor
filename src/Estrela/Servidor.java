@@ -18,6 +18,11 @@ public class Servidor {
   private void rodar() {
 
     try {
+      Log log = new Log();
+      Thread dt = new Thread(log);
+
+      dt.setDaemon(true);
+      dt.start();
       socketServidor = new ServerSocket(porta);
       System.out.println("Servidor rodando na porta " +
           socketServidor.getLocalPort());
@@ -33,7 +38,7 @@ public class Servidor {
       while (true) {
         cliente = socketServidor.accept();
         // Cria uma thread do servidor para tratar a conexão
-        ImplServidor servidor = new ImplServidor(cliente);
+        ImplServidor servidor = new ImplServidor(cliente, log);
         Thread t = new Thread(servidor);
         // Inicia a thread para o cliente conectado
         ImplServidor.cont++;
