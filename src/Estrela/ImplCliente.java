@@ -3,10 +3,8 @@ package Estrela;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ImplCliente implements Runnable {
   private Socket cliente;
@@ -60,7 +58,22 @@ public class ImplCliente implements Runnable {
       try {
         String mensagemDoServidor;
         while ((mensagemDoServidor = entradaDoServidor.readLine()) != null) {
-          System.out.println("Mensagem do servidor: " + mensagemDoServidor);
+          if (mensagemDoServidor.startsWith("unicast: ")) {
+
+            String[] partes = mensagemDoServidor.split(" ");
+            String msg = partes[1];
+            int origem = Integer.parseInt(partes[5]);
+
+            System.out.println("Mensagem unicast de " + origem + ": " + msg);
+          } else {
+
+            String[] partes = mensagemDoServidor.split(" ");
+            String msg = partes[1];
+            int origem = Integer.parseInt(partes[3]);
+
+            System.out.println("Mensagem broadcast de " + origem + ": " + msg);
+          }
+
         }
       } catch (Exception e) {
         e.printStackTrace();

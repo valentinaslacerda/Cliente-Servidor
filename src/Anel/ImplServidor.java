@@ -42,7 +42,7 @@ public class ImplServidor implements Runnable {
         }
 
       }
-      // Finaliza scanner e socket
+
       if (conexao == false) {
         entrada.close();
         System.out.println("Fim do cliente " +

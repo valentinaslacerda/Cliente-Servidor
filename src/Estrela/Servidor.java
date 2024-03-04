@@ -37,10 +37,10 @@ public class Servidor {
       System.out.println("Aguardando conexão do cliente...");
       while (true) {
         cliente = socketServidor.accept();
-        // Cria uma thread do servidor para tratar a conexão
+
         ImplServidor servidor = new ImplServidor(cliente, log);
         Thread t = new Thread(servidor);
-        // Inicia a thread para o cliente conectado
+
         ImplServidor.cont++;
         t.start();
       }

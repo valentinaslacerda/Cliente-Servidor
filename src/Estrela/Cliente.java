@@ -33,9 +33,9 @@ public class Cliente {
   }
 
   public static void main(String args[]) {
-    // new Cliente(1, 5000);
+    new Cliente(1, 5000);
     // new Cliente(2, 5000);
-    new Cliente(3, 5000);
+    // new Cliente(3, 5000);
 
   }
 }

@@ -10,7 +10,6 @@ public class ImplCliente implements Runnable {
   private Socket cliente;
   private boolean conexao = true;
   ObjectOutputStream saida;
-
   private int id;
 
   public ImplCliente(Socket cliente) {
@@ -33,12 +32,11 @@ public class ImplCliente implements Runnable {
     try {
 
       System.out.println("O cliente conectou ao servidor com ID " + Processo.id);
-      // Prepara para leitura do teclado
+
       Scanner teclado = new Scanner(System.in);
-      // Cria objeto para enviar a mensagem ao servidor
 
       while (conexao) {
-        // Envia mensagem ao servidor
+
         System.out.println("Digite uma mensagem: ");
 
         mensagem = teclado.nextLine();
